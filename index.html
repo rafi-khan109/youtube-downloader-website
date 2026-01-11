@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Pro Downloader | Fast & Free</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF0000;
+            --primary-dark: #CC0000;
+            --secondary: #667eea;
+            --secondary-dark: #764ba2;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --dark: #1a1a1a;
+            --light: #ffffff;
+            --gray: #f8f9fa;
+            --gray-dark: #6c757d;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 50px rgba(0, 0, 0, 0.15);
+            --radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-dark) 100%);
+            min-height: 100vh;
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+
+        .logo-text span {
+            font-size: 0.8rem;
+            color: var(--gray-dark);
+            font-weight: 500;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 10rem 2rem 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 0, 0, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(102, 126, 234, 0.1) 0%, transparent 50%);
+            z-index: -1;
+        }
+
+        .hero h2 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            color: white;
+            opacity: 0.9;
+            line-height: 1.8;
+        }
+
+        /* Downloader Card */
+        .downloader-container {
+            max-width: 1200px;
+            margin: -4rem auto 4rem;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .downloader-card {
+            background: var(--light);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            transform: translateY(0);
+            transition: var(--transition);
+        }
+
+        .downloader-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Input Section */
+        .url-input-section {
+            padding: 3rem;
+            background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .url-input-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 8s infinite linear;
+        }
+
+        @keyframes pulse {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .input-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .input-wrapper {
+            flex: 1;
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-dark);
+            font-size: 1.2rem;
+            z-index: 3;
+        }
+
+        .url-input {
+            width: 100%;
+            padding: 1.3rem 1.5rem 1.3rem 3.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            background: var(--light);
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .url-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 0, 0, 0.2), var(--shadow);
+            transform: scale(1.02);
+        }
+
+        .fetch-btn {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: var(--light);
+            border: none;
+            padding: 1.3rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            transition: var(--transition);
+            white-space: nowrap;
+            box-shadow: 0 10px 20px rgba(255, 0, 0, 0.3);
+            letter-spacing: 0.5px;
+        }
+
+        .fetch-btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(255, 0, 0, 0.4);
+        }
+
+        .fetch-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .input-hint {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Status Indicators */
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 1.5rem;
+            border-radius: 50px;
+            margin-top: 1.5rem;
+            position: relative;
+            z-index: 2;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--success);
+            animation: pulse-dot 2s infinite;
+            box-shadow: 0 0 20px var(--success);
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.1); }
+        }
+
+        /* Video Info Section */
+        .video-info-section {
+            padding: 3rem;
+            display: none;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .video-preview {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2.5rem;
+            margin-bottom: 3rem;
+            align-items: start;
+        }
+
+        @media (max-width: 992px) {
+            .video-preview {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .thumbnail-container {
+            position: relative;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            transform: perspective(1000px) rotateY(-5deg);
+            transition: var(--transition);
+        }
+
+        .thumbnail-container:hover {
+            transform: perspective(1000px) rotateY(0deg) scale(1.02);
+        }
+
+        .thumbnail {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+            transition: var(--transition);
+        }
+
+        .thumbnail-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 2rem 1.5rem 1.5rem;
+            color: white;
+            transform: translateY(100%);
+            transition: var(--transition);
+        }
+
+        .thumbnail-container:hover .thumbnail-overlay {
+            transform: translateY(0);
+        }
+
+        .video-details h3 {
+            font-size: 1.9rem;
+            margin-bottom: 1.2rem;
+            color: var(--dark);
+            line-height: 1.4;
+            font-weight: 700;
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .meta-card {
+            background: var(--gray);
+            padding: 1.2rem;
+            border-radius: var(--radius);
+            text-align: center;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+
+        .meta-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .meta-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 0.8rem;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .meta-card span {
+            display: block;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 0.95rem;
+        }
+
+        .description {
+            color: var(--gray-dark);
+            line-height: 1.7;
+            max-height: 120px;
+            overflow-y: auto;
+            padding-right: 1rem;
+            font-size: 0.95rem;
+        }
+
+        /* Download Options */
+        .download-options {
+            margin-top: 2.5rem;
+        }
+
+        .download-options h4 {
+            font-size: 1.6rem;
+            margin-bottom: 1.8rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .format-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .format-tab {
+            padding: 1rem 2rem;
+            background: var(--gray);
+            border: none;
+            border-radius: var(--radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1rem;
+        }
+
+        .format-tab.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            box-shadow: 0 10px 20px rgba(255, 0, 0, 0.2);
+        }
+
+        .format-tab:hover:not(.active) {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+
+        .quality-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .quality-card {
+            background: var(--light);
+            padding: 1.8rem;
+            border-radius: var(--radius);
+            border: 2px solid var(--gray);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quality-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+
+        .quality-card:hover {
+            border-color: transparent;
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .quality-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .quality-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .quality-badge.video {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+        }
+
+        .quality-badge.audio {
+            background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+            color: white;
+        }
+
+        .quality-card h5 {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--dark);
+            font-weight: 700;
+        }
+
+        .quality-details {
+            color: var(--gray-dark);
+            margin-bottom: 1.2rem;
+            font-size: 0.95rem;
+        }
+
+        .quality-details p {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .download-btn {
+            background: linear-gradient(135deg, var(--success), #0da271);
+            color: white;
+            border: none;
+            padding: 1rem 1.8rem;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+            transition: var(--transition);
+            width: 100%;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(16, 185, 129, 0.4);
+        }
+
+        .download-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Loading State */
+        .loading-container {
+            text-align: center;
+            padding: 4rem;
+            display: none;
+        }
+
+        .spinner {
+            width: 70px;
+            height: 70px;
+            border: 5px solid var(--gray);
+            border-top: 5px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1.5rem;
+            position: relative;
+        }
+
+        .spinner::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border: 5px solid transparent;
+            border-top: 5px solid var(--secondary);
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite reverse;
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            margin: 1.5rem 0;
+            display: none;
+            overflow: hidden;
+            height: 10px;
+        }
+
+        .progress-bar {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 50px;
+            transition: width 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.4), 
+                transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--dark);
+            color: white;
+            padding: 1.2rem 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow-lg);
+            transform: translateX(100%);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 1001;
+            max-width: 400px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            background: linear-gradient(135deg, var(--success), #0da271);
+        }
+
+        .toast.error {
+            background: linear-gradient(135deg, var(--danger), #dc2626);
+        }
+
+        .toast.warning {
+            background: linear-gradient(135deg, var(--warning), #d97706);
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 6rem 2rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            margin-top: 4rem;
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features-container h3 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 4rem;
+            color: white;
+            font-weight: 800;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            text-align: center;
+            transition: var(--transition);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2rem;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(10deg);
+        }
+
+        .feature-card h4 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: white;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 2rem 2rem;
+            margin-top: 6rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: white;
+            font-weight: 700;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #aaa;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+            transform: translateX(5px);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid #444;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+            
+            .input-group {
+                flex-direction: column;
+            }
+            
+            .fetch-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .url-input-section {
+                padding: 2rem;
+            }
+            
+            .video-info-section {
+                padding: 2rem;
+            }
+            
+            .quality-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .format-tabs {
+                justify-content: center;
+            }
+            
+            .nav-container {
+                padding: 1rem;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        /* Stats Counter */
+        .stats-counter {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin: 3rem 0;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+        }
+
+        .stat-label {
+            color: white;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            opacity: 0.8;
+        }
+
+        /* How to Use Section */
+        .how-to-use {
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: var(--radius);
+            margin: 3rem auto;
+            max-width: 1200px;
+        }
+
+        .how-to-use h3 {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 3rem;
+            color: var(--dark);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .step {
+            text-align: center;
+            padding: 2rem;
+            background: var(--gray);
+            border-radius: var(--radius);
+            transition: var(--transition);
+        }
+
+        .step:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.5rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        .step h4 {
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .step p {
+            color: var(--gray-dark);
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <i class="fab fa-youtube"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>YouTube Pro</h1>
+                    <span>Fast & Free Downloader</span>
+                </div>
+            </a>
+            <div class="status-indicator" id="statusIndicator">
+                <div class="status-dot"></div>
+                <span id="statusText">Checking server connection...</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h2>Download YouTube Videos & Music</h2>
+        <p>Fast, free, and unlimited YouTube video downloads in HD quality. No registration required, no limits.</p>
+        
+        <!-- Stats Counter -->
+        <div class="stats-counter">
+            <div class="stat-item">
+                <div class="stat-number" id="downloadCount">10K+</div>
+                <div class="stat-label">Downloads Today</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" id="videoCount">50K+</div>
+                <div class="stat-label">Videos Downloaded</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Free Service</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Downloader -->
+    <div class="downloader-container">
+        <div class="downloader-card">
+            <!-- URL Input Section -->
+            <div class="url-input-section">
+                <div class="input-group">
+                    <div class="input-wrapper">
+                        <i class="fab fa-youtube input-icon"></i>
+                        <input type="text" 
+                               id="urlInput" 
+                               class="url-input" 
+                               placeholder="Paste YouTube URL here...">
+                    </div>
+                    <button class="fetch-btn" id="fetchBtn">
+                        <i class="fas fa-bolt"></i>
+                        Get Video Info
+                    </button>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div class="progress-container" id="progressContainer">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+                
+                <div class="input-hint">
+                    <i class="fas fa-info-circle"></i>
+                    <span id="exampleText">Example: https://www.youtube.com/watch?v=dQw4w9WgXcQ</span>
+                </div>
+                
+                <!-- Connection Status -->
+                <div class="status-indicator" id="connectionStatus">
+                    <div class="status-dot"></div>
+                    <span id="connectionText">Checking server status...</span>
+                </div>
+            </div>
+
+            <!-- Loading State -->
+            <div class="loading-container" id="loading">
+                <div class="spinner"></div>
+                <h3>Fetching Video Information</h3>
+                <p>This may take a few seconds...</p>
+            </div>
+
+            <!-- Video Information -->
+            <div class="video-info-section" id="videoInfo">
+                <div class="video-preview">
+                    <div class="thumbnail-container">
+                        <img class="thumbnail" 
+                             id="thumbnail" 
+                             src="" 
+                             alt="Video Thumbnail">
+                        <div class="thumbnail-overlay">
+                            <p>Click quality options below to download</p>
+                        </div>
+                    </div>
+                    <div class="video-details">
+                        <h3 id="videoTitle">Video Title Will Appear Here</h3>
+                        <div class="meta-grid">
+                            <div class="meta-card">
+                                <div class="meta-icon">
+                                    <i class="far fa-clock"></i>
+                                </div>
+                                <span id="videoDuration">--:--</span>
+                            </div>
+                            <div class="meta-card">
+                                <div class="meta-icon">
+                                    <i class="fas fa-eye"></i>
+                                </div>
+                                <span id="videoViews">-- views</span>
+                            </div>
+                            <div class="meta-card">
+                                <div class="meta-icon">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <span id="videoAuthor">Unknown</span>
+                            </div>
+                            <div class="meta-card">
+                                <div class="meta-icon">
+                                    <i class="fas fa-calendar"></i>
+                                </div>
+                                <span id="videoDate">--/--/----</span>
+                            </div>
+                        </div>
+                        <div class="description" id="videoDescription">
+                            Video description will appear here after fetching video information.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Download Options -->
+                <div class="download-options">
+                    <h4><i class="fas fa-download"></i> Download Options</h4>
+                    
+                    <!-- Format Tabs -->
+                    <div class="format-tabs">
+                        <button class="format-tab active" data-format="video">
+                            <i class="fas fa-film"></i> Video (MP4)
+                        </button>
+                        <button class="format-tab" data-format="audio">
+                            <i class="fas fa-music"></i> Audio (MP3)
+                        </button>
+                    </div>
+                    
+                    <!-- Quality Grid -->
+                    <div class="quality-grid" id="qualityOptions">
+                        <!-- Quality options will be dynamically inserted here -->
+                    </div>
+                    
+                    <!-- Backup Download Link -->
+                    <a href="#" class="backup-link" id="backupLink" style="display: none; margin-top: 2rem; text-align: center; display: block;">
+                        <i class="fas fa-external-link-alt"></i>
+                        Click here if download doesn't start automatically
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- How to Use Section -->
+    <section class="how-to-use">
+        <h3>How to Download Videos</h3>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h4>Copy URL</h4>
+                <p>Go to YouTube and copy the URL of the video you want to download</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h4>Paste & Fetch</h4>
+                <p>Paste the URL in our downloader and click "Get Video Info"</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h4>Download</h4>
+                <p>Choose your preferred quality and format, then download instantly</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section">
+        <div class="features-container">
+            <h3>Why Choose Our Downloader?</h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h4>Super Fast</h4>
+                    <p>High-speed downloads with optimized servers for maximum performance</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4>Safe & Secure</h4>
+                    <p>No malware, no ads, completely safe to use. Your privacy is protected</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-infinity"></i>
+                    </div>
+                    <h4>Unlimited Downloads</h4>
+                    <p>No limits on video length or number of downloads. Download as much as
